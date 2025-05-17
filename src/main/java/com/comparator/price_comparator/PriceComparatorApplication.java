@@ -1,0 +1,37 @@
+// src/main/java/com/comparator/price_comparator/PriceComparatorApplication.java
+package com.comparator.price_comparator;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+import com.comparator.price_comparator.repository.ProductRepository;
+import com.comparator.price_comparator.service.DataLoadingService;
+
+@SpringBootApplication
+public class PriceComparatorApplication implements CommandLineRunner {
+
+ private static final Logger logger = LoggerFactory.getLogger(PriceComparatorApplication.class);
+ @Autowired
+ private DataLoadingService dataLoadingService;
+ @Autowired
+ private ProductRepository productRepository;
+
+ public static void main(String[] args) {
+ SpringApplication.run(PriceComparatorApplication.class, args);
+ }
+
+ @Override
+ public void run(String... args) throws Exception {
+ // Load data from CSV files on startup
+ String lidlProductsFile = "src/main/resources/data/lidl_2025-05-01.csv";
+
+ productRepository.addProducts(dataLoadingService.loadProductsFromCsv(lidlProductsFile, "Lidl"));
+
+ // Add log statement to verify data loading
+ logger.info("Loaded {} products from CSV", productRepository.getAllProducts().size());
+ }
+}

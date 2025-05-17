@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.comparator.price_comparator.model.Product;
@@ -15,5 +16,10 @@ public class PricingController {
  @GetMapping("/products")
  public List<Product> getAllProducts() {
  return pricingService.getAllProducts();
+ }
+
+@GetMapping("/products/category")
+ public List<Product> getProductsByCategory(@RequestParam String category) {
+ return pricingService.getProductsByCategory(category);
  }
 }

@@ -3,6 +3,7 @@ package com.comparator.price_comparator.repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Repository;
 
@@ -18,5 +19,10 @@ public class ProductRepository {
 
  public List<Product> getAllProducts() {
  return new ArrayList<>(products); // Return a copy to prevent modification
+ }
+  public List<Product> getProductsByCategory(String category) {
+ return products.stream()
+ .filter(p -> p.getProductCategory().equalsIgnoreCase(category))
+ .collect(Collectors.toList());
  }
 }

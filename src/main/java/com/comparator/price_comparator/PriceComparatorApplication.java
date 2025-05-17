@@ -28,8 +28,11 @@ public class PriceComparatorApplication implements CommandLineRunner {
  public void run(String... args) throws Exception {
  // Load data from CSV files on startup
  String lidlProductsFile = "src/main/resources/data/lidl_2025-05-01.csv";
+String profiProductsFile = "src/main/resources/data/profi_2025-05-01.csv";
 
  productRepository.addProducts(dataLoadingService.loadProductsFromCsv(lidlProductsFile, "Lidl"));
+ productRepository.addProducts(dataLoadingService.loadProductsFromCsv(profiProductsFile, "Profi"));
+
 
  // Add log statement to verify data loading
  logger.info("Loaded {} products from CSV", productRepository.getAllProducts().size());

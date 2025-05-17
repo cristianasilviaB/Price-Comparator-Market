@@ -17,4 +17,8 @@ public class PricingService {
  public List<Product> getAllProducts() {
  return productRepository.getAllProducts();
  }
+
+ public List<Product> getProductsByCategory(String category) {
+ return productRepository.getProductsByCategory(category);
+ }
 }

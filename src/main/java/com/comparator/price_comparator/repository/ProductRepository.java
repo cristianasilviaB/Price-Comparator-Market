@@ -2,7 +2,6 @@ package com.comparator.price_comparator.repository;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,13 +23,17 @@ public void addProducts(List<Product> products) {
 this.products.addAll(products);
 }
 
+public List<Product> getAllProducts() {
+return new ArrayList<>(products);
+}
+
 public void addDiscounts(List<Discount> discounts) {
 discountRepository.addDiscounts(discounts);
 }
 
-public List<Product> getAllProducts() {
-return new ArrayList<>(products);
-}
+public List<Discount> getAllDiscounts() {
+        return discountRepository.getAllDiscounts();
+    }
 
 public List<Product> getProductsByCategory(String category) {
 return products.stream()
@@ -39,26 +42,25 @@ return products.stream()
 }
 
 public List<Product> applyDiscounts(LocalDate currentDate) {
-return products.stream()
-.map(product -> {
-discountRepository.findDiscountsByProductIdAndStoreName(product.getProductId(), product.getStoreName())
-.stream()
-.filter(discount -> currentDate.isAfter(discount.getFromDate().minusDays(1))
-&& currentDate.isBefore(discount.getToDate().plusDays(1)))
-.findFirst()
-.ifPresent(discount -> {
-double discountPercentage = discount.getPercentageOfDiscount();
-double discountedPrice = product.getPrice() * (1 - (discountPercentage / 100));
-product.setPrice(discountedPrice);
-});
-return product;
-})
-.collect(Collectors.toList());
+  return products.stream()
+  .map(product -> {
+  discountRepository.findDiscountsByProductIdAndStoreName(product.getProductId(), product.getStoreName())
+  .stream()
+  .filter(discount -> !currentDate.isBefore(discount.getFromDate()) && !currentDate.isAfter(discount.getToDate()))
+  .findFirst()
+  .ifPresent(discount -> {
+  double discountPercentage = discount.getPercentageOfDiscount();
+  double discountedPrice = product.getPrice() * (1 - (discountPercentage / 100));
+  product.setPrice(discountedPrice);
+  });
+  return product;
+  })
+  .collect(Collectors.toList());
+ }
+ 
+public List<Discount> findDiscountsByProductIdAndStoreName(String productId, String storeName) {
+    return discountRepository.findDiscountsByProductIdAndStoreName(productId, storeName);
 }
 
-public Collection<Product> getAllDiscounts() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'getAllDiscounts'");
-}
 
 }

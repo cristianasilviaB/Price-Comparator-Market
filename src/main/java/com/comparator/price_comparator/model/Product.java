@@ -13,4 +13,21 @@ public class Product {
  private double price;
  private String currency;
  private String storeName;
+
+  private Double discountedPrice;
+  private Double currentDiscountPercentage;
+
+  public Double getDiscountedPrice() {
+  return discountedPrice;
+  }
+  public void setDiscountedPrice(Double discountedPrice) {
+  this.discountedPrice = discountedPrice;
+  }
+  // Getter and setter for currentDiscountPercentage
+  public Double getCurrentDiscountPercentage() {
+  return currentDiscountPercentage;
+  }
+  public void setCurrentDiscountPercentage(Double currentDiscountPercentage) {
+  this.currentDiscountPercentage = currentDiscountPercentage;
+  }
 }

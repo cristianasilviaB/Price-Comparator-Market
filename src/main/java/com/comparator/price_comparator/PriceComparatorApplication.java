@@ -1,7 +1,6 @@
 // src/main/java/com/comparator/price_comparator/PriceComparatorApplication.java
 package com.comparator.price_comparator;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -37,21 +36,23 @@ private DiscountRepository discountRepository;
  String lidlProductsFile = "src/main/resources/data/lidl_2025-05-01.csv";
  String profiProductsFile = "src/main/resources/data/profi_2025-05-01.csv";
  String lidlDiscountsFile = "src/main/resources/data/lidl_discounts_2025-05-01.csv";
+ String profiDiscountsFile = "src/main/resources/data/profi_discounts_2025-05-01.csv";
 
  productRepository.addProducts(dataLoadingService.loadProductsFromCsv(lidlProductsFile, "Lidl"));
  productRepository.addProducts(dataLoadingService.loadProductsFromCsv(profiProductsFile, "Profi"));
- discountRepository.addDiscounts(dataLoadingService.loadDiscountsFromCsv(lidlDiscountsFile,  "Lidl"));
-
 
  // Load discounts using the new method
- List<Discount> discounts = dataLoadingService.loadDiscountsFromCsv(lidlDiscountsFile, "Lidl");
- productRepository.addDiscounts(discounts);
+ List<Discount> lidlDiscounts = dataLoadingService.loadDiscountsFromCsv(lidlDiscountsFile, "Lidl");
+ discountRepository.addDiscounts(lidlDiscounts);
+ List<Discount> profiDiscounts = dataLoadingService.loadDiscountsFromCsv(profiDiscountsFile, "Profi");
+ discountRepository.addDiscounts(profiDiscounts);
 
     // Apply discounts to products
- LocalDate currentDate = LocalDate.now();
- productRepository.applyDiscounts(currentDate);
+ //LocalDate currentDate = LocalDate.now();
+ //productRepository.applyDiscounts(currentDate);
 
  // Add log statement to verify data loading
  logger.info("Loaded {} products from CSV", productRepository.getAllProducts().size());
+ logger.info("Loaded {} discounts from CSV", discountRepository.getAllDiscounts().size());
  }
 }

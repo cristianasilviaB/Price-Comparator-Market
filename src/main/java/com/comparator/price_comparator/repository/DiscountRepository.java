@@ -23,7 +23,7 @@ return new ArrayList<>(discounts); // Return a copy
 
 public List<Discount> findDiscountsByProductIdAndStoreName(String productId, String storeName) {
 return discounts.stream()
-.filter(discount -> discount.getProductId().equals(productId) && discount.getStoreName().equals(storeName))
+.filter(discount -> discount.getProductId().equals(productId) && (storeName == null || discount.getStoreName().equals(storeName)))
 .collect(Collectors.toList());
 }
 }

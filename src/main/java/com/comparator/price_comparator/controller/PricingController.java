@@ -1,8 +1,10 @@
 package com.comparator.price_comparator.controller;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -38,4 +40,15 @@ public class PricingController {
   }
   return ResponseEntity.ok(products);
   }
+
+@GetMapping("/products/best-discounts")
+    public ResponseEntity<List<Product>> getProductsWithHighestCurrentDiscounts(
+        @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+        LocalDate currentDate = (date != null) ? date : LocalDate.now();
+        List<Product> list = pricingService.getProductsWithHighestCurrentDiscounts(currentDate);
+        if (list.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+         return ResponseEntity.ok(list);
+    }
 }

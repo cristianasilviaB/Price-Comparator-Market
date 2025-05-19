@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.comparator.price_comparator.model.Discount;
+import com.comparator.price_comparator.model.PriceRecord;
 import com.comparator.price_comparator.model.Product;
 import com.comparator.price_comparator.repository.ProductRepository;
 
@@ -74,6 +75,30 @@ public class PricingService {
   .collect(Collectors.toList());
 
   return bestDiscounts;
+ }
+
+ public List<PriceRecord> getPriceHistory(String productId, String storeName, String brand, String category) {
+  List<Product> allProducts = productRepository.getAllProducts();
+
+  return allProducts.stream()
+  .filter(p -> productId == null || p.getProductId().equalsIgnoreCase(productId))
+  .filter(p -> storeName == null || p.getStoreName().equalsIgnoreCase(storeName))
+  .filter(p -> brand == null || p.getBrand().equalsIgnoreCase(brand))
+  .filter(p -> category == null || p.getProductCategory().equalsIgnoreCase(category))
+  .map(p -> {
+  PriceRecord record = new PriceRecord();
+  record.setProductId(p.getProductId());
+  record.setProductName(p.getProductName());
+  record.setBrand(p.getBrand());
+  record.setStoreName(p.getStoreName());
+  record.setProductCategory(p.getProductCategory());
+  record.setDate(p.getDate()); // Folosește p.getDate()
+  record.setOriginalPrice(p.getPrice());
+  record.setDiscountedPrice(p.getDiscountedPrice());
+  record.setDiscountPercentage(p.getCurrentDiscountPercentage());
+  return record;
+  })
+  .collect(Collectors.toList());
  }
   
 }

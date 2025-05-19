@@ -1,6 +1,7 @@
 package com.comparator.price_comparator.model;
 
 import lombok.Data;
+import java.time.LocalDate;
 
 @Data
 public class Product {
@@ -13,6 +14,8 @@ public class Product {
  private double price;
  private String currency;
  private String storeName;
+
+ private LocalDate date;
 
   private Double discountedPrice;
   private Double currentDiscountPercentage;

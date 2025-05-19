@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.comparator.price_comparator.model.PriceRecord;
 import com.comparator.price_comparator.model.Product;
 import com.comparator.price_comparator.service.PricingService;
 
@@ -51,4 +52,16 @@ public class PricingController {
         }
          return ResponseEntity.ok(list);
     }
+
+    @GetMapping("/price-history")
+public ResponseEntity<List<PriceRecord>> getPriceHistory(
+        @RequestParam(required = false) String productId,
+        @RequestParam(required = false) String storeName,
+        @RequestParam(required = false) String brand,
+        @RequestParam(required = false) String category) {
+
+    List<PriceRecord> history = pricingService.getPriceHistory(productId, storeName, brand, category);
+    return history.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(history);
+}
+
 }

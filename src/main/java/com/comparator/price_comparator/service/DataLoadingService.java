@@ -26,6 +26,9 @@ public class DataLoadingService {
 
  public List<Product> loadProductsFromCsv(String filePath, String storeName) {
  List<Product> products = new ArrayList<>();
+ DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+ LocalDate fileDate = extractDateFromFilename(filePath);
+
  try (Reader reader = new FileReader(filePath)) {
  CSVFormat csvFormat = CSVFormat.Builder.create()
  .setHeader()
@@ -48,6 +51,7 @@ public class DataLoadingService {
  product.setPrice(Double.parseDouble(record.get("price")));
  product.setCurrency(record.get("currency"));
  product.setStoreName(storeName);
+ product.setDate(fileDate);
 
  logger.info("Record: {}", record.toMap());
  products.add(product);
@@ -58,6 +62,18 @@ public class DataLoadingService {
  return products;
  }
 
+ private LocalDate extractDateFromFilename(String filePath) {
+  try {
+  String filename = filePath.substring(filePath.lastIndexOf('/') + 1); // Extrage numele fișierului
+  String datePart = filename.substring(filename.indexOf('_') + 1, filename.lastIndexOf('.')); // Izolează data
+  DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+  return LocalDate.parse(datePart, dateFormatter);
+  } catch (Exception e) {
+  log.error("Error extracting date from filename: {}", e.getMessage());
+  return null; // Sau o altă valoare implicită, după caz
+  }
+  }
+  
 public List<Discount> loadDiscountsFromCsv(String filePath, String storeName) {
  List<Discount> discounts = new ArrayList<>();
  DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");

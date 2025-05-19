@@ -33,12 +33,14 @@ private DiscountRepository discountRepository;
  @Override
  public void run(String... args) throws Exception {
  // Load data from CSV files on startup
- String lidlProductsFile = "src/main/resources/data/lidl_2025-05-01.csv";
+ String lidlProductsFile1 = "src/main/resources/data/lidl_2025-05-01.csv";
+ String lidlProductsFile2 = "src/main/resources/data/lidl_2025-05-08.csv";
  String profiProductsFile = "src/main/resources/data/profi_2025-05-01.csv";
  String lidlDiscountsFile = "src/main/resources/data/lidl_discounts_2025-05-01.csv";
  String profiDiscountsFile = "src/main/resources/data/profi_discounts_2025-05-01.csv";
 
- productRepository.addProducts(dataLoadingService.loadProductsFromCsv(lidlProductsFile, "Lidl"));
+ productRepository.addProducts(dataLoadingService.loadProductsFromCsv(lidlProductsFile1, "Lidl"));
+ productRepository.addProducts(dataLoadingService.loadProductsFromCsv(lidlProductsFile2, "Lidl"));
  productRepository.addProducts(dataLoadingService.loadProductsFromCsv(profiProductsFile, "Profi"));
 
  // Load discounts using the new method

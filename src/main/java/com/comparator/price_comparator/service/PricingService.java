@@ -1,6 +1,7 @@
 package com.comparator.price_comparator.service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,21 @@ public class PricingService {
  }
 
  public List<Product> getProductsByCategory(String category) {
- return productRepository.getProductsByCategory(category);
- }
+ if (category == null || category.isBlank()) {
+  return List.of();
+  }
+  return productRepository.getProductsByCategory(category.toLowerCase().trim());
+  }
+
+   public List<Product> searchProducts(String query) {
+  if (query == null || query.isBlank()) {
+  return List.of();
+  }
+  String q = query.toLowerCase().trim();
+  return productRepository.getAllProducts().stream().filter(p -> p.getProductName().toLowerCase().contains(q)
+  || p.getBrand().toLowerCase().contains(q)).collect(Collectors.toList());
+  }
+
+  
+  
 }

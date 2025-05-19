@@ -2,6 +2,7 @@ package com.comparator.price_comparator.repository;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -54,4 +55,10 @@ return product;
 })
 .collect(Collectors.toList());
 }
+
+public Collection<Product> getAllDiscounts() {
+    // TODO Auto-generated method stub
+    throw new UnsupportedOperationException("Unimplemented method 'getAllDiscounts'");
+}
+
 }

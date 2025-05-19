@@ -62,5 +62,12 @@ public List<Discount> findDiscountsByProductIdAndStoreName(String productId, Str
     return discountRepository.findDiscountsByProductIdAndStoreName(productId, storeName);
 }
 
-
+public Product getProductById(String productId, String storeName) {
+  for (Product product : products) {
+  if (product.getProductId().equals(productId) && product.getStoreName().equals(storeName)) {
+  return product;
+  }
+  }
+  return null;
+}
 }

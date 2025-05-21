@@ -61,13 +61,12 @@ public List<Product> applyDiscounts(LocalDate currentDate) {
 public List<Discount> findDiscountsByProductIdAndStoreName(String productId, String storeName) {
     return discountRepository.findDiscountsByProductIdAndStoreName(productId, storeName);
 }
-
-public Product getProductById(String productId, String storeName) {
+public Product getProductById(String productId) {
   for (Product product : products) {
-  if (product.getProductId().equals(productId) && product.getStoreName().equals(storeName)) {
+  if (product.getProductId().equals(productId)) {
   return product;
   }
   }
   return null;
-}
+  }
 }

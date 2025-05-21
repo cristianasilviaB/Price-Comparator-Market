@@ -1,7 +1,8 @@
 package com.comparator.price_comparator.model;
 
-import lombok.Data;
 import java.time.LocalDate;
+
+import lombok.Data;
 
 @Data
 public class Product {
@@ -20,6 +21,8 @@ public class Product {
   private Double discountedPrice;
   private Double currentDiscountPercentage;
 
+  private transient Double valuePerUnit; // Calculated value per unit
+
   public Double getDiscountedPrice() {
   return discountedPrice;
   }
@@ -33,4 +36,12 @@ public class Product {
   public void setCurrentDiscountPercentage(Double currentDiscountPercentage) {
   this.currentDiscountPercentage = currentDiscountPercentage;
   }
+
+  public Double getValuePerUnit() {
+  return valuePerUnit;
+  }
+  public void setValuePerUnit(Double valuePerUnit) {
+  this.valuePerUnit = valuePerUnit;
+  }
+  
 }

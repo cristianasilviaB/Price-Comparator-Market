@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -53,7 +54,7 @@ public class PricingController {
          return ResponseEntity.ok(list);
     }
 
-    @GetMapping("/price-history")
+@GetMapping("/price-history")
 public ResponseEntity<List<PriceRecord>> getPriceHistory(
         @RequestParam(required = false) String productId,
         @RequestParam(required = false) String storeName,
@@ -64,4 +65,9 @@ public ResponseEntity<List<PriceRecord>> getPriceHistory(
     return history.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(history);
 }
 
+@GetMapping("/products/{productId}/recommendations")
+ public ResponseEntity<List<Product>> getRecommendations(@PathVariable String productId) {
+  List<Product> recommendations = pricingService.getRecommendedProducts(productId);
+  return ResponseEntity.ok(recommendations);
+ }
 }

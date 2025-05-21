@@ -74,7 +74,7 @@ package com.comparator.price_comparator.service;
   int quantity = basketItem.getQuantity();
 
   // Get product details from the repository
-  Product product = productRepository.getProductById(productId, storeName); // Assuming you update ProductRepository
+  Product product = productRepository.getProductById(productId); // Assuming you update ProductRepository
   if (product == null) {
   log.warn("Product with ID {} and store {} not found", productId, storeName);
   continue; // Skip to the next item if product not found

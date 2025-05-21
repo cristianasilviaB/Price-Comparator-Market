@@ -26,7 +26,6 @@ public class DataLoadingService {
 
  public List<Product> loadProductsFromCsv(String filePath, String storeName) {
  List<Product> products = new ArrayList<>();
- DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
  LocalDate fileDate = extractDateFromFilename(filePath);
 
  try (Reader reader = new FileReader(filePath)) {
@@ -53,7 +52,7 @@ public class DataLoadingService {
  product.setStoreName(storeName);
  product.setDate(fileDate);
 
- logger.info("Record: {}", record.toMap());
+ logger.info("Loaded Product ID: {}, Price: {}, Package Quantity: {}", product.getProductId(), product.getPrice(),product.getPackageQuantity());
  products.add(product);
  }
  } catch (IOException e) {

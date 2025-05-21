@@ -1,10 +1,13 @@
 package com.comparator.price_comparator.service;
 
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,9 +15,10 @@ import com.comparator.price_comparator.model.Discount;
 import com.comparator.price_comparator.model.PriceRecord;
 import com.comparator.price_comparator.model.Product;
 import com.comparator.price_comparator.repository.ProductRepository;
-
 @Service
 public class PricingService {
+
+    private static final Logger logger = LoggerFactory.getLogger(PricingService.class);
 
  @Autowired
  private ProductRepository productRepository;
@@ -100,5 +104,42 @@ public class PricingService {
   })
   .collect(Collectors.toList());
  }
-  
+  //method to calculate value per unit
+  private Product calculateValuePerUnit(Product product) {
+  logger.info("ENTERING calculateValuePerUnit for product: {}", product.getProductId()); // Add this line
+  if (product.getPackageQuantity() != 0) {
+  double price = product.getPrice();
+  double packageQuantity = product.getPackageQuantity();
+  double valuePerUnit = price / packageQuantity;
+  logger.info("Product ID: {}, Price: {}, Package Quantity: {}, Value Per Unit: {}",
+  product.getProductId(), price, packageQuantity, valuePerUnit); // ALSO ADD THIS LINE
+  product.setValuePerUnit(valuePerUnit);
+  } else {
+  product.setValuePerUnit(null); // Handle zero quantity
+  }
+  logger.info("EXITING calculateValuePerUnit for product: {}", product.getProductId()); // ADD THIS LINE
+  return product;
+ }
+  public List<Product> getRecommendedProducts(String productId) {
+  logger.info("Getting recommendations for product ID: {}", productId);
+  Product baseProduct = productRepository.getProductById(productId);
+  if (baseProduct == null) {
+  logger.warn("Base product not found for ID: {}", productId);
+  return Collections.emptyList();
+  }
+  String category = baseProduct.getProductCategory();
+  logger.info("Base product category: {}", category);
+  List<Product> allProducts = getProductsByCategory(category); // get from the service layer
+  logger.info("Number of products in category {}: {}", category, allProducts.size());
+  List<Product> recommendations = allProducts.stream()
+  .filter(p -> !p.getProductId().equals(productId))
+  .limit(5)
+  .collect(Collectors.toList());
+  logger.info("Number of recommendations: {}", recommendations.size());
+  return recommendations;
+ }
+
+  public Product getProductById(String productId) {
+     throw new UnsupportedOperationException("Unimplemented method 'getProductById'");
+  }
 }

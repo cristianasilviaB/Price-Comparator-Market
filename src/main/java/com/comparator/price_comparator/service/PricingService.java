@@ -139,7 +139,14 @@ public class PricingService {
   return recommendations;
  }
 
-  public Product getProductById(String productId) {
-     throw new UnsupportedOperationException("Unimplemented method 'getProductById'");
+ public Product getProductById(String productId) {
+  // Iterate over all products.
+  List<Product> allProducts = productRepository.getAllProducts();
+  for (Product product : allProducts) {
+  if (product.getProductId().equals(productId)) {
+  return product;
   }
+  }
+  return null; // Product not found
+ }
 }

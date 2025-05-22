@@ -1,6 +1,7 @@
 // src/main/java/com/comparator/price_comparator/PriceComparatorApplication.java
 package com.comparator.price_comparator;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -68,8 +69,8 @@ private DiscountRepository discountRepository;
  discountRepository.addDiscounts(kauflandDiscounts2);
 
     // Apply discounts to products
- //LocalDate currentDate = LocalDate.now();
- //productRepository.applyDiscounts(currentDate);
+ LocalDate currentDate = LocalDate.now();
+ productRepository.applyDiscounts(currentDate);
 
  // Add log statement to verify data loading
  logger.info("Loaded {} products from CSV", productRepository.getAllProducts().size());

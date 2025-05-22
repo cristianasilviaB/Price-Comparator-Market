@@ -106,18 +106,18 @@ public class PricingService {
  }
   //method to calculate value per unit
   private Product calculateValuePerUnit(Product product) {
-  logger.info("ENTERING calculateValuePerUnit for product: {}", product.getProductId()); // Add this line
+  logger.info("ENTERING calculateValuePerUnit for product: {}", product.getProductId());
   if (product.getPackageQuantity() != 0) {
   double price = product.getPrice();
   double packageQuantity = product.getPackageQuantity();
   double valuePerUnit = price / packageQuantity;
   logger.info("Product ID: {}, Price: {}, Package Quantity: {}, Value Per Unit: {}",
-  product.getProductId(), price, packageQuantity, valuePerUnit); // ALSO ADD THIS LINE
+  product.getProductId(), price, packageQuantity, valuePerUnit); 
   product.setValuePerUnit(valuePerUnit);
   } else {
   product.setValuePerUnit(null); // Handle zero quantity
   }
-  logger.info("EXITING calculateValuePerUnit for product: {}", product.getProductId()); // ADD THIS LINE
+  logger.info("EXITING calculateValuePerUnit for product: {}", product.getProductId()); 
   return product;
  }
   public List<Product> getRecommendedProducts(String productId) {

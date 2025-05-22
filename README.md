@@ -36,6 +36,7 @@ P012;pâine albă;K-Classic;500;g;panificație;2025-05-09;2025-05-15;7
 
 
 📡 REST API Endpoints
+
 🔍 Product Management
 GET /products	-> List all products
 GET /products/category?category={category}	-> Filter products by category

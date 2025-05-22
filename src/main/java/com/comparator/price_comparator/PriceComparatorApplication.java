@@ -43,7 +43,7 @@ private DiscountRepository discountRepository;
  String lidlDiscountsFile1 = "src/main/resources/data/lidl_discounts_2025-05-01.csv";
  String lidlDiscountsFile2 = "src/main/resources/data/lidl_discounts_2025-05-08.csv";
  String profiDiscountsFile1 = "src/main/resources/data/profi_discounts_2025-05-01.csv";
- String profiDiscountsFile2 = "src/main/resources/data/profi_discounts_2025-05-081.csv";
+ String profiDiscountsFile2 = "src/main/resources/data/profi_discounts_2025-05-08.csv";
  String kauflandDiscountsFile1 = "src/main/resources/data/kaufland_discounts_2025-05-01.csv";
  String kauflandDiscountsFile2 = "src/main/resources/data/kaufland_discounts_2025-05-08.csv";
 

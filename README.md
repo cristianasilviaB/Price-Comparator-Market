@@ -73,11 +73,7 @@ Get Historical Data
 GET /price-history?productId={id}&storeName={store}&brand={brand}&category={cat}
 
 🧪 Build & Run
-Prerequisites
-Java 17+
-Maven
-
-Build
+Prerequisites: Java 17+ & Maven
 
 Build: mvn clean install
 

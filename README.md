@@ -1,4 +1,6 @@
 🛒 Price Comparison Application
+
+
 A Spring Boot application for comparing product prices across different stores. It loads product and discount data from CSV files and provides RESTful APIs for managing products, price alerts, shopping baskets, and price history. The system includes logging, simulated email alerts, and scheduled tasks.
 
 🚀 Features

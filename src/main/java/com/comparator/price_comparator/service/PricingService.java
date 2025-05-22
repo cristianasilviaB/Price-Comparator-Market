@@ -24,14 +24,18 @@ public class PricingService {
  private ProductRepository productRepository;
 
  public List<Product> getAllProducts() {
- return productRepository.getAllProducts();
+ return productRepository.getAllProducts().stream()
+        .map(this::calculateValuePerUnit)
+        .collect(Collectors.toList());
  }
 
  public List<Product> getProductsByCategory(String category) {
  if (category == null || category.isBlank()) {
   return List.of();
   }
-  return productRepository.getProductsByCategory(category.toLowerCase().trim());
+  return productRepository.getProductsByCategory(category.toLowerCase().trim()).stream()
+        .map(this::calculateValuePerUnit) 
+        .collect(Collectors.toList());
   }
 
    public List<Product> searchProducts(String query) {
@@ -40,7 +44,9 @@ public class PricingService {
   }
   String q = query.toLowerCase().trim();
   return productRepository.getAllProducts().stream().filter(p -> p.getProductName().toLowerCase().contains(q)
-  || p.getBrand().toLowerCase().contains(q)).collect(Collectors.toList());
+  || p.getBrand().toLowerCase().contains(q))
+  .map(this::calculateValuePerUnit)
+  .collect(Collectors.toList());
   }
   
   
@@ -69,7 +75,7 @@ public class PricingService {
   product.setDiscountedPrice(null);
   product.setCurrentDiscountPercentage(null);
   }
-  return product;
+  return calculateValuePerUnit(product); 
   }).collect(Collectors.toList());
 
   // Filter out products with no discounts and sort by discount percentage
@@ -134,6 +140,7 @@ public class PricingService {
   List<Product> recommendations = allProducts.stream()
   .filter(p -> !p.getProductId().equals(productId))
   .limit(5)
+  .map(this::calculateValuePerUnit)
   .collect(Collectors.toList());
   logger.info("Number of recommendations: {}", recommendations.size());
   return recommendations;
@@ -144,7 +151,7 @@ public class PricingService {
   List<Product> allProducts = productRepository.getAllProducts();
   for (Product product : allProducts) {
   if (product.getProductId().equals(productId)) {
-  return product;
+  return calculateValuePerUnit(product); 
   }
   }
   return null; // Product not found

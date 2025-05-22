@@ -23,6 +23,13 @@ import com.comparator.price_comparator.model.PriceAlert;
   return alert;
   }
 
+  public PriceAlert findById(String alertId) {
+  return alerts.stream()
+  .filter(alert -> alert.getAlertId().equals(alertId))
+  .findFirst()
+  .orElse(null); // Return null if not found
+  }
+
   public List<PriceAlert> findByProductId(String productId) {
   return alerts.stream()
   .filter(alert -> alert.getProductId().equals(productId))

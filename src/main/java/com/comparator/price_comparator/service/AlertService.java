@@ -1,4 +1,6 @@
 package com.comparator.price_comparator.service;
+import java.util.List;
+
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -7,8 +9,6 @@ import org.springframework.stereotype.Service;
 import com.comparator.price_comparator.model.PriceAlert;
 import com.comparator.price_comparator.model.Product;
 import com.comparator.price_comparator.repository.PriceAlertRepository;
-
-import java.util.List;
 
  @Service
  public class AlertService {
@@ -27,6 +27,14 @@ import java.util.List;
   public PriceAlert createPriceAlert(PriceAlert alert) {
   alert.setEmailSent(false);
   return priceAlertRepository.save(alert);
+  }
+
+  public PriceAlert getAlertById(String alertId) {
+  return priceAlertRepository.findById(alertId);
+  }
+  
+  public List<PriceAlert> getAlertsByProductId(String productId) {
+  return priceAlertRepository.findByProductId(productId);
   }
 
   @Scheduled(fixedRate = 60000) // Run every hour (3600000 milliseconds)
